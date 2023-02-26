@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { connectDB } from '@utils/connectDB';
 import { PORT, NODE_ENV } from '@config';
 
+import ApiVersionMiddleware from '@middlewares/apiVersionMiddleware';
 import router from '@routes/index';
 
 console.log(`NODE_ENV: ${NODE_ENV}`);
@@ -23,6 +24,11 @@ if (NODE_ENV === 'development') app.use(morgan('dev'));
 
 // Cors
 app.use(cors());
+
+// API Version Middleware (Set the version of the API in Header)
+// Get the version of the API from Header
+
+app.use(ApiVersionMiddleware.setVersion('1'));
 
 // Main Routes
 app.use('/', router);

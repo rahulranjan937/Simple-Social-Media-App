@@ -91,6 +91,7 @@ class AuthController {
         data: {
           id: user._id,
           email: user.email,
+          username: user.username,
         },
       });
     } catch (err: any) {

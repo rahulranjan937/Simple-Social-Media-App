@@ -12,21 +12,21 @@ const Post = new PostController();
 
 const authMiddleware = new AuthMiddleware();
 /**
- * @route   POST /api/v1/post/create
+ * @route   POST /api/post/create
  * @desc    Create a post
  * @access  Private
  */
 router.post('/create', authMiddleware.isAuthenticated, authMiddleware.requireUser, upload.any(), Post.createPost);
 
 /**
- * @route   GET /api/v1/post
+ * @route   GET /api/post
  * @desc    Get all posts
  * @access  Private
  */
 router.get('/', authMiddleware.isAuthenticated, authMiddleware.requireUser, upload.any(), Post.getPosts);
 
 /**
- * @route   GET /api/v1/post/:id
+ * @route   GET /api/post/:id
  * @desc    Get a post
  * @access  Private
  */
@@ -34,7 +34,7 @@ router.get('/', authMiddleware.isAuthenticated, authMiddleware.requireUser, uplo
 router.get('/:id', authMiddleware.isAuthenticated, authMiddleware.requireUser, upload.any(), Post.getPost);
 
 /**
- * @route   DELETE /api/v1/post/:id/delete
+ * @route   DELETE /api/post/:id/delete
  * @desc    Delete a post
  * @access  Private
  * @params  id
