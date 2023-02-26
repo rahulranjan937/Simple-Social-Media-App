@@ -3,10 +3,34 @@ import { Request, Response, NextFunction } from 'express';
 type APIVersion = '1' | '2';
 
 class ApiVersionMiddleware {
+  public static setHeaders = (req: Request, res: Response, next: NextFunction) => {
+    const apiVersion = req.headers['x-api-version'];
+    console.log(apiVersion);
+    console.log(req.headers);
+
+    if (!apiVersion) {
+      return res.status(400).json({
+        message: 'API version is required',
+      });
+    }
+
+    handleApiVersion(apiVersion as APIVersion);
+    console.log(getCurrentVersion());
+
+    next();
+  };
+
   // Set the version of the API in Header
   public static setVersion(version: APIVersion): (req: Request, res: Response, next: NextFunction) => void {
     return (req: Request, res: Response, next: NextFunction) => {
+      console.log(req.headers);
+      console.log('setVersion');
+      console.log(version);
+
       res.setHeader('X-API-Version', version);
+      console.log(res.getHeaders());
+
+      res.locals.apiVersion = version;
       next();
     };
   }
@@ -52,6 +76,20 @@ export function apiVersionMiddleware(version: APIVersion): (req: Request, res: R
     res.setHeader('X-API-Version', version);
     next();
   };
+}
+
+let currentVersion: APIVersion = '1'; // default version
+
+export function handleApiVersion(apiVersion: string) {
+  if (apiVersion === '1' || apiVersion === '2') {
+    currentVersion = apiVersion as APIVersion;
+  } else {
+    throw new Error(`Unsupported API version: ${apiVersion}`);
+  }
+}
+
+export function getCurrentVersion(): APIVersion {
+  return currentVersion;
 }
 
 export default ApiVersionMiddleware;

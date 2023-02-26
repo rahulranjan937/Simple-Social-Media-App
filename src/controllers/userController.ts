@@ -1,14 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@interfaces/IUser';
+import ApiVersionMiddleware from '@middlewares/apiVersionMiddleware';
 
 export class UserController {
   private userService = new UserService();
 
   public getUserByUsername = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Get user by username');
-
-    console.log(req.params);
-
     try {
       const user = await this.userService.getUserByQuery({ username: req.params.username });
 

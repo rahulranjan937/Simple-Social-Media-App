@@ -28,7 +28,7 @@ app.use(cors());
 // API Version Middleware (Set the version of the API in Header)
 // Get the version of the API from Header
 
-app.use(ApiVersionMiddleware.setVersion('1'));
+// app.use(ApiVersionMiddleware.setVersion('1'));
 
 // Main Routes
 app.use('/', router);

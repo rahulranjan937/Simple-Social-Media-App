@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 const router = Router();
 
+import ApiVersionMiddleware, { handleApiVersion, getCurrentVersion } from '@middlewares/apiVersionMiddleware';
 import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
 import postRoutes from './post.routes';
@@ -21,7 +22,7 @@ router.route('/').get(status);
  * @APIVersion 1
  * @middleware apiVersionMiddleware
  */
-router.use('/api/auth', authRoutes);
+router.use('/api/auth', ApiVersionMiddleware.setHeaders, authRoutes);
 
 /**
  * @description User Routes - /api/user - Public Routes
@@ -30,7 +31,13 @@ router.use('/api/auth', authRoutes);
  * @middleware auth
  * @middleware upload
  */
-router.use('/api/user', userRoutes);
+router.use(
+  '/api/user',
+
+  ApiVersionMiddleware.setHeaders,
+
+  userRoutes
+);
 
 /**
  * @description Post Routes - /api/post - Private Routes
