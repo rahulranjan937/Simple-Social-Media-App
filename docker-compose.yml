@@ -4,8 +4,8 @@ services:
   api-server:
     build:
       context: .
-    container_name: dataforms-api-server
-    image: dataforms-api-server
+    container_name: social-media-api
+    image: social-media-api
     restart: unless-stopped
     env_file:
       - .env
