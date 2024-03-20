@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  api-server:
+    build:
+      context: .
+    container_name: dataforms-api-server
+    image: dataforms-api-server
+    restart: unless-stopped
+    env_file:
+      - .env
+
+    networks:
+      - app-network
+
+    ports:
+      - '3000:3333'
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    image: nginx-server
+    restart: unless-stopped
+
+    networks:
+      - app-network
+
+    ports:
+      - '80:3000'
+
+    depends_on:
+      - api-server
+
+networks:
+  app-network:
+    driver: bridge
