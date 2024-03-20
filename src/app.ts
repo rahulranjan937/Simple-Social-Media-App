@@ -1,16 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { connectDB } from '@utils/connectDB';
 import { PORT, NODE_ENV } from '@config';
 
-import ApiVersionMiddleware from '@middlewares/apiVersionMiddleware';
 import router from '@routes/index';
 
 console.log(`NODE_ENV: ${NODE_ENV}`);
 
 const app = express();
+const httpServer = createServer(app);
 
 // Body Parser
 app.use(express.json());
@@ -25,13 +27,47 @@ if (NODE_ENV === 'development') app.use(morgan('dev'));
 // Cors
 app.use(cors());
 
-// API Version Middleware (Set the version of the API in Header)
-// Get the version of the API from Header
-
-// app.use(ApiVersionMiddleware.setVersion('1'));
-
 // Main Routes
 app.use('/', router);
+
+// Socket.io
+const io = new Server(httpServer, {
+  pingTimeout: 60000,
+  cors: {
+    origin: '*',
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('user Connected');
+
+  socket.on('setup', (userData) => {
+    socket.join(userData.id);
+    console.log(userData.id);
+    socket.emit('connected');
+  });
+
+  socket.on('join chat', (room) => {
+    socket.join(room);
+    console.log('User Joined to Room: ' + room);
+  });
+
+  socket.on('typing', (room) => socket.in(room).emit('typing'));
+
+  socket.on('stop typing', (room) => socket.in(room).emit('stop typing'));
+
+  socket.on('new message', (newMessageRecieved) => {
+    const chat = newMessageRecieved.chat;
+
+    if (!chat.users) return console.log('Chat.users not defined!');
+
+    chat.users.forEach((user: { _id: string | string[] }) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+
+      socket.in(user._id).emit('message received', newMessageRecieved);
+    });
+  });
+});
 
 // UnKnown Routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -51,7 +87,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(PORT ?? 3333, () => {
+httpServer.listen(PORT ?? 3333, () => {
   console.log(`Server is running on port ${PORT}`);
 
   connectDB();

@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@interfaces/IUser';
-import ApiVersionMiddleware from '@middlewares/apiVersionMiddleware';
 
 export class UserController {
   private userService = new UserService();

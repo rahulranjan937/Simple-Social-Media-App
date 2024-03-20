@@ -5,6 +5,7 @@ interface IPost {
   user?: string;
   caption: string;
   imageUrls: string[];
+  publicId?: string;
   likes?: string[];
   comments?: string[];
   date?: Date;
@@ -24,6 +25,38 @@ const postSchema = new mongoose.Schema<IPost>(
       {
         type: String,
         required: [true, 'Image URLs is required'],
+      },
+    ],
+    publicId: {
+      type: String,
+    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    comments: [
+      {
+        commentedBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'users',
+        },
+        text: {
+          type: String,
+          required: [true, 'Comment is required'],
+        },
+        commentedAt: {
+          type: Date,
+          default: Date.now,
+          required: [true, 'Comment date is required'],
+        },
+        likes: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+          },
+        ],
       },
     ],
     date: {
