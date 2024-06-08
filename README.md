@@ -1,64 +1,97 @@
-# Sample Social Media App
+# Instagram-Clone-Backend
 
-This is a sample social media app built with Node.js, Express, and MongoDB that allows users to create accounts, post Media, and follow other users. It is built using the MVC pattern and is a work in progress. It is not meant to be used in production. It is meant to be a learning tool for those who are interested in learning how to build a social media app. It is not meant to be a complete social media app. It is meant to be a learning tool for those who are interested in learning how to build a social media app.
+Welcome to Instagram-Clone-Backend, a dynamic and interactive social media app built with Node.js, TypeScript, Express, and MongoDB. This project empowers users to create accounts, share media, and connect by following each other. Designed using the robust MVC pattern, this app serves as an excellent learning tool for anyone interested in mastering the development of social media applications. Please note that this is a work in progress and is not intended for production use.
 
-## Getting Started
+## 🚀 Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Ready to dive in? Follow these steps to get the project up and running on your local machine for development and testing purposes. For live system deployment, check out the deployment section.
+
+## 🌟 Features
+
+This project includes the following features to provide a comprehensive social media experience:
+
+- **User Authentication**: Securely create accounts, log in, and manage user sessions.
+- **Post Media**: Upload and share photos and videos with your followers.
+- **Follow Users**: Follow other users to see their posts in your feed.
+- **Feeds**: View a curated feed of posts from the users you follow.
+- **Chat Function**: Real-time messaging with other users to stay connected.
+- **Notifications**: Stay updated with notifications for likes, comments, and new followers (coming soon).
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Ensure you have the following software installed:
 
-- Node.js - Download and Install [Node.js](https://nodejs.org/en/).
-- Postman - Download and Install [Postman](https://www.getpostman.com/).
+- **Node.js** - Download and install from [Node.js](https://nodejs.org/en/).
+- **Postman** - Download and install from [Postman](https://www.getpostman.com/). (Optional)
+- **Docker** - Download and install from [Docker](https://www.docker.com/). (Optional)
 
-### Installing
+### Installation Steps
 
-A step by step series of examples that tell you how to get a development env running
+Here’s how you can set up your development environment in just a few simple steps:
 
-Clone the repository
+1. **Clone the repository**:
 
-```
-git clone rahulranjan937/Simple-Social-Media-App.git
-```
+    ```sh
+    git clone https://github.com/rahulranjan937/instagram-clone-backend.git
+    cd Simple-Social-Media-App
+    ```
 
-Install dependencies
+2. **Install dependencies**:
 
-```
-npm install
-```
+    ```sh
+    npm install
+    ```
 
-Create a .env file in the root directory and add the following
+3. **Set up environment variables**:
 
-```
-cp .env.example .env
-```
+    ```sh
+    cp .env.example .env
+    ```
 
-Modify the .env file to include your own values
+    Then, open the `.env` file and replace the placeholder values with your own.
 
-Start the server
+4. **Start the server in development mode**:
 
-```
-npm start
-```
+    ```sh
+    npm run dev
+    ```
 
-Start the server in development mode
+5. **Start the server in production mode**:
 
-```
-npm run dev
-```
+    Before starting the server in production mode, you need to build the TypeScript files:
 
-Build the project
+    ```sh
+    npm run build
+    ```
 
-```
-npm run build
-```
+    Then, start the server:
 
-## API Documentation
+    ```sh
+    npm start
+    ```
 
-API_Documentation.md file contains the documentation for the API endpoints.
+### Running with Docker
 
-## Authors
+If you prefer using Docker, follow these steps to get started:
 
-[Rahul Ranjan](https://github.com/rahulranjan937)
+1. **Build the Docker image**:
+
+    ```sh
+    docker build -t instagram-clone-backend .
+    ```
+
+2. **Run the Docker container**:
+
+    ```sh
+    docker run -d -p 3000:3000 --env-file .env instagram-clone-backend
+    ```
+
+## 📚 API Documentation
+
+Detailed documentation for the API endpoints is available in the `API_Documentation.md` file. This will guide you through using the various features and endpoints of the app.
+
+## 👥 Authors
+
+Crafted with care by [Rahul Ranjan](https://github.com/rahulranjan937).
+
+This project has been modified and adapted to create an engaging Instagram-Clone-Backend experience. Happy coding!

@@ -4,8 +4,8 @@ services:
   api-server:
     build:
       context: .
-    container_name: social-media-api
-    image: social-media-api
+    container_name: instagram-api-server
+    image: instagram-api-server
     restart: unless-stopped
     env_file:
       - .env
